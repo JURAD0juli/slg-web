@@ -1,0 +1,10 @@
+# Vercel
+.vercel
+
+# Dependencias (no aplica a este sitio estático, por prevención)
+node_modules/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLG · Soluciones Logísticas Globales</title>
+<meta name="description" content="SLG — Transporte terrestre y logística de carga contenerizada desde los principales puertos de México hasta su destino final. Puntualidad, seguridad y monitoreo constante.">
+<meta name="theme-color" content="#071A30">
+<meta property="og:title" content="SLG · Soluciones Logísticas Globales">
+<meta property="og:description" content="Conectamos fronteras, movilizamos el éxito de su negocio. Transporte contenerizado y logística de última milla con cobertura nacional.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23071A30'/%3E%3Ctext x='50' y='68' font-family='Arial' font-size='46' font-weight='700' fill='%2397E9FF' text-anchor='middle'%3ESLG%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --ink:#071A30; --ink-2:#0C2742; --ink-line:#1C3B60;
+  --brand-700:#0053A7; --brand-500:#1374CC; --brand-400:#2196F3; --brand-200:#6BBEF9; --cyan:#97E9FF;
+  --on-ink:#EAF2FC; --on-ink-soft:#9FB6D2;
+  --bg:#F4F7FB; --surface:#FFFFFF; --surface-2:#EAF1F9;
+  --text:#0E2136; --text-soft:#4B5D73; --hairline:#D8E3EF;
+  --shadow-sm:0 1px 2px rgba(7,26,48,.06), 0 2px 8px rgba(7,26,48,.05);
+  --shadow-md:0 10px 30px -12px rgba(7,26,48,.22), 0 4px 12px rgba(7,26,48,.06);
+  --shadow-lg:0 30px 60px -20px rgba(7,26,48,.35);
+  --radius:14px; --radius-sm:10px;
+  --maxw:1200px; --gutter:clamp(18px,5vw,64px); --header-h:74px;
+  --f-display:"Saira",-apple-system,system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",-apple-system,system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme:dark){
+    --bg:#04101F; --surface:#0A1E37; --surface-2:#0E2846; --text:#E9F1FB; --text-soft:#A7BDD6; --hairline:#173254;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4); --shadow-md:0 12px 34px -14px rgba(0,0,0,.6);
+    --shadow-lg:0 30px 60px -20px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#04101F; --surface:#0A1E37; --surface-2:#0E2846; --text:#E9F1FB; --text-soft:#A7BDD6; --hairline:#173254;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4); --shadow-md:0 12px 34px -14px rgba(0,0,0,.6);
+  --shadow-lg:0 30px 60px -20px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;line-height:1.05;letter-spacing:-.01em;text-wrap:balance;font-weight:700}
+p{margin:0}
+:focus-visible{outline:2.5px solid var(--brand-400);outline-offset:3px;border-radius:4px}
+section{scroll-margin-top:calc(var(--header-h) + 8px)}
+::selection{background:var(--brand-400);color:#fff}
+
+/* ============ UTILITIES ============ */
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.eyebrow{font-family:var(--f-mono);font-size:12.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.6em}
+.eyebrow::before{content:"";width:22px;height:1.5px;background:var(--brand-400)}
+.eyebrow.on-dark{color:var(--cyan)}
+.eyebrow.on-dark::before{background:var(--cyan)}
+.eyebrow.light{color:var(--brand-500)}
+.sec-title{font-size:clamp(1.9rem,4.4vw,3.1rem);margin-top:16px;letter-spacing:-.02em}
+.sec-lead{color:var(--text-soft);font-size:1.08rem;max-width:60ch;margin-top:18px}
+.band-dark{background:var(--ink);color:var(--on-ink)}
+.band-dark .sec-lead{color:var(--on-ink-soft)}
+.pad{padding-block:clamp(64px,9vw,120px)}
+
+/* ============ BUTTONS ============ */
+.btn{--_c:#fff;display:inline-flex;align-items:center;gap:.55em;font-family:var(--f-display);font-weight:600;font-size:1rem;letter-spacing:.01em;padding:14px 26px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s,color .25s,border-color .25s;white-space:nowrap}
+.btn svg{width:18px;height:18px;transition:transform .3s}
+.btn-primary{background:linear-gradient(120deg,var(--brand-700),var(--brand-400));color:#fff;box-shadow:0 10px 26px -10px rgba(19,116,204,.75)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px -10px rgba(33,150,243,.85)}
+.btn-primary:hover svg{transform:translateX(4px)}
+.btn-ghost{background:transparent;border-color:color-mix(in srgb,currentColor 35%,transparent);color:inherit}
+.btn-ghost:hover{background:color-mix(in srgb,currentColor 10%,transparent);transform:translateY(-2px)}
+.btn-lg{padding:17px 34px;font-size:1.08rem}
+
+/* ============ HEADER ============ */
+.header{position:fixed;inset:0 0 auto;z-index:60;height:var(--header-h);display:flex;align-items:center;transition:background .35s,box-shadow .35s,border-color .35s;border-bottom:1px solid transparent}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%}
+.header.scrolled{background:color-mix(in srgb,var(--ink) 92%,transparent);backdrop-filter:blur(14px) saturate(140%);border-bottom-color:var(--ink-line);box-shadow:0 8px 30px -18px rgba(0,0,0,.6)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:40px;width:auto}
+.brand .bname{font-family:var(--f-display);font-weight:700;color:#fff;line-height:1;font-size:1.35rem;letter-spacing:.02em}
+.brand .btag{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.16em;color:var(--cyan);text-transform:uppercase;display:block;margin-top:3px}
+.nav{display:flex;align-items:center;gap:6px}
+.nav a{font-size:.95rem;font-weight:500;color:var(--on-ink);padding:9px 14px;border-radius:8px;position:relative;transition:color .2s}
+.nav a::after{content:"";position:absolute;left:14px;right:14px;bottom:5px;height:1.5px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .28s}
+.nav a:hover{color:#fff}
+.nav a:hover::after{transform:scaleX(1)}
+.nav .btn{display:none}
+.header-cta{display:flex;align-items:center;gap:14px}
+.burger{display:none;background:none;border:0;cursor:pointer;padding:8px;width:44px;height:44px}
+.burger span{display:block;width:24px;height:2px;background:#fff;margin:5px auto;transition:.3s;border-radius:2px}
+.header.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.header.open .burger span:nth-child(2){opacity:0}
+.header.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:min(92vh,880px);display:flex;align-items:flex-end;padding-top:var(--header-h);overflow:hidden;background:var(--ink)}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 40%;animation:kb 22s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1.04)}to{transform:scale(1.13)}}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,12,25,.94) 0%,rgba(5,18,38,.82) 38%,rgba(6,22,45,.42) 70%,rgba(7,26,48,.55) 100%),linear-gradient(0deg,rgba(4,12,25,.95),transparent 55%)}
+.hero-inner{position:relative;z-index:2;padding-block:clamp(40px,7vw,96px);width:100%}
+.hero-inner .wrap{max-width:var(--maxw)}
+.hero h1{color:#fff;font-size:clamp(2.5rem,6.4vw,5rem);font-weight:800;max-width:16ch;margin-top:22px;letter-spacing:-.025em}
+.hero h1 .accent{color:transparent;background:linear-gradient(100deg,var(--brand-200),var(--cyan));-webkit-background-clip:text;background-clip:text}
+.hero-sub{color:#cdddf0;font-size:clamp(1.05rem,1.7vw,1.28rem);max-width:56ch;margin-top:24px;line-height:1.6}
+.hero-actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:36px}
+.hero-trust{display:flex;align-items:center;gap:12px;margin-top:40px;color:#bfd4ea;font-family:var(--f-mono);font-size:.82rem;letter-spacing:.04em}
+.hero-trust .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(151,233,255,.18);animation:pulse 2.4s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 9px rgba(151,233,255,0)}}
+.hero-side{position:absolute;right:var(--gutter);top:50%;transform:translateY(-50%);z-index:3;writing-mode:vertical-rl;font-family:var(--f-mono);font-size:11px;letter-spacing:.34em;color:rgba(151,233,255,.6);text-transform:uppercase;display:flex;gap:20px;align-items:center}
+.hero-scroll{position:absolute;left:var(--gutter);bottom:20px;z-index:3;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.28em;color:rgba(255,255,255,.5);text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.hero-scroll .line{width:34px;height:1px;background:rgba(255,255,255,.4);position:relative;overflow:hidden}
+.hero-scroll .line::after{content:"";position:absolute;inset:0;width:12px;background:var(--cyan);animation:slide 2s infinite}
+@keyframes slide{from{transform:translateX(-14px)}to{transform:translateX(38px)}}
+
+/* ============ TRUST / METRICS ============ */
+.trust-strip{border-block:1px solid var(--ink-line);background:linear-gradient(var(--ink-2),var(--ink))}
+.trust-strip .wrap{padding-block:20px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.trust-strip .label{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--on-ink-soft);max-width:24ch}
+.trust-tags{display:flex;flex-wrap:wrap;gap:10px 12px}
+.trust-tags span{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--brand-200);border:1px solid var(--ink-line);padding:8px 14px;border-radius:999px;transition:.25s}
+.trust-tags span:hover{border-color:var(--brand-400);color:var(--cyan)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ink-line);border:1px solid var(--ink-line);border-radius:var(--radius);overflow:hidden;margin-top:56px}
+.metric{background:var(--ink);padding:34px 26px;position:relative}
+.metric .num{font-family:var(--f-display);font-weight:800;font-size:clamp(2.4rem,4.4vw,3.4rem);color:#fff;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.metric .num .u{color:var(--cyan);font-size:.5em;vertical-align:super;margin-left:2px}
+.metric .cap{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-soft);margin-top:12px}
+.metric::before{content:"";position:absolute;left:26px;top:0;width:30px;height:3px;background:var(--brand-400)}
+.metric-note{font-family:var(--f-mono);font-size:11px;color:var(--on-ink-soft);margin-top:18px;opacity:.75}
+
+/* ============ SECTION HEAD ============ */
+.sec-head{max-width:760px}
+.sec-head.center{margin-inline:auto;text-align:center}
+.sec-head.center .eyebrow{justify-content:center}
+.sec-head.center .sec-lead{margin-inline:auto}
+
+/* ============ NOSOTROS ============ */
+.about{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,72px);align-items:center}
+.about-media{position:relative}
+.about-media img{border-radius:var(--radius);box-shadow:var(--shadow-lg);width:100%;aspect-ratio:4/3;object-fit:cover}
+.about-media .frame{position:absolute;inset:14px -14px -14px 14px;border:1.5px solid var(--brand-400);border-radius:var(--radius);z-index:-1}
+.about-badge{position:absolute;left:-16px;bottom:-22px;background:var(--ink);color:#fff;border-radius:var(--radius-sm);padding:18px 22px;box-shadow:var(--shadow-lg);border:1px solid var(--ink-line)}
+.about-badge .n{font-family:var(--f-display);font-weight:800;font-size:2rem;color:var(--cyan);line-height:1}
+.about-badge .t{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-soft);margin-top:6px}
+.pillars{display:grid;gap:16px;margin-top:32px}
+.pillar{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;border:1px solid var(--hairline);border-radius:var(--radius-sm);background:var(--surface);transition:.3s}
+.pillar:hover{border-color:var(--brand-400);box-shadow:var(--shadow-md);transform:translateX(4px)}
+.pillar .ic{flex:none;width:44px;height:44px;border-radius:11px;display:grid;place-items:center;background:var(--surface-2);color:var(--brand-500)}
+.pillar .ic svg{width:22px;height:22px}
+.pillar h4{font-size:1.15rem}
+.pillar p{color:var(--text-soft);font-size:.96rem;margin-top:4px}
+
+/* ============ SERVICES ============ */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+.svc{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);padding:30px 28px 26px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s}
+.svc::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--brand-700),var(--brand-400));transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.svc:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:transparent}
+.svc:hover::after{transform:scaleX(1)}
+.svc .ic{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,var(--surface-2),var(--surface));border:1px solid var(--hairline);color:var(--brand-500);margin-bottom:22px;transition:.3s}
+.svc:hover .ic{background:linear-gradient(145deg,var(--brand-700),var(--brand-400));color:#fff;border-color:transparent}
+.svc .ic svg{width:26px;height:26px}
+.svc .idx{position:absolute;top:26px;right:26px;font-family:var(--f-mono);font-size:12px;color:var(--text-soft);opacity:.5}
+.svc h3{font-size:1.32rem;letter-spacing:-.01em}
+.svc p{color:var(--text-soft);font-size:.97rem;margin-top:12px}
+.svc .benefit{display:flex;align-items:center;gap:8px;margin-top:18px;font-family:var(--f-mono);font-size:12px;letter-spacing:.03em;color:var(--brand-500)}
+.svc .benefit svg{width:15px;height:15px;flex:none}
+.svc .more{display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-weight:600;font-family:var(--f-display);font-size:.95rem;color:var(--brand-500);transition:gap .25s}
+.svc .more:hover{gap:11px}
+
+/* ============ COVERAGE NETWORK ============ */
+.cov{position:relative;overflow:hidden}
+.cov-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(32px,5vw,64px);align-items:center;margin-top:52px}
+.cov-list{display:grid;gap:10px}
+.node-row{display:flex;align-items:center;gap:14px;padding:13px 16px;border:1px solid var(--ink-line);border-radius:var(--radius-sm);background:var(--ink-2);transition:.28s;cursor:default}
+.node-row:hover,.node-row.active{border-color:var(--brand-400);background:color-mix(in srgb,var(--brand-700) 22%,var(--ink-2))}
+.node-row .pin{width:10px;height:10px;border-radius:50%;background:var(--cyan);flex:none;box-shadow:0 0 0 4px rgba(151,233,255,.15)}
+.node-row .nm{font-family:var(--f-display);font-weight:600;color:#fff;font-size:1.02rem}
+.node-row .st{font-family:var(--f-mono);font-size:11px;color:var(--on-ink-soft);letter-spacing:.04em;margin-left:auto;text-transform:uppercase}
+.map-wrap{position:relative;border:1px solid var(--ink-line);border-radius:var(--radius);background:radial-gradient(120% 120% at 70% 20%,rgba(19,116,204,.16),transparent 60%),var(--ink-2);padding:14px}
+.map-wrap svg{width:100%;height:auto;display:block}
+.route{fill:none;stroke:var(--brand-400);stroke-width:1.4;stroke-dasharray:5 7;opacity:.55;animation:dash 3.5s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-48}}
+.mnode{cursor:pointer}
+.mnode circle.hit{fill:transparent}
+.mnode .halo{fill:var(--cyan);opacity:.18;transition:.3s}
+.mnode .core{fill:var(--cyan);stroke:var(--ink);stroke-width:1.5}
+.mnode:hover .halo,.mnode.active .halo{opacity:.4;r:18}
+.mnode text{font-family:var(--f-mono);font-size:12px;fill:var(--on-ink);letter-spacing:.02em}
+.mnode .hub{fill:#fff}
+.cov-note{font-family:var(--f-mono);font-size:11px;color:var(--on-ink-soft);margin-top:22px;opacity:.8}
+
+/* ============ BENEFITS ============ */
+.ben-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline);border:1px solid var(--hairline);border-radius:var(--radius);overflow:hidden;margin-top:56px}
+.ben{background:var(--surface);padding:34px 30px;transition:background .3s}
+.ben:hover{background:var(--surface-2)}
+.ben .top{display:flex;align-items:center;gap:14px}
+.ben .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--brand-400) 12%,transparent);color:var(--brand-500);flex:none}
+.ben .ic svg{width:23px;height:23px}
+.ben .kpi{font-family:var(--f-display);font-weight:800;font-size:1.05rem;color:var(--brand-500)}
+.ben h4{font-size:1.18rem;margin-top:20px}
+.ben p{color:var(--text-soft);font-size:.95rem;margin-top:8px}
+
+/* ============ PROCESS ============ */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:60px;counter-reset:st}
+.step{position:relative;padding-top:40px}
+.step::before{counter-increment:st;content:"0" counter(st);position:absolute;top:0;left:0;font-family:var(--f-display);font-weight:800;font-size:1.5rem;color:var(--cyan)}
+.step::after{content:"";position:absolute;top:12px;left:52px;right:-12px;height:1.5px;background:linear-gradient(90deg,var(--brand-400),transparent);opacity:.5}
+.step:last-child::after{display:none}
+.step h4{font-size:1.2rem;color:#fff;margin-bottom:10px}
+.step p{color:var(--on-ink-soft);font-size:.95rem}
+.step .dot{position:absolute;top:6px;left:44px;width:8px;height:8px;border-radius:50%;background:var(--brand-400)}
+
+/* ============ TESTIMONIALS ============ */
+.tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+.tst{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);padding:30px 28px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);position:relative}
+.tst .quote{font-family:var(--f-display);font-size:3rem;line-height:.6;color:var(--brand-200);height:26px}
+.tst .stars{color:var(--brand-400);letter-spacing:2px;font-size:.9rem;margin:14px 0 12px}
+.tst p{color:var(--text);font-size:1.02rem;line-height:1.6}
+.tst .who{display:flex;align-items:center;gap:13px;margin-top:24px;padding-top:20px;border-top:1px solid var(--hairline)}
+.tst .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(140deg,var(--brand-700),var(--brand-400));color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;flex:none}
+.tst .who .nm{font-family:var(--f-display);font-weight:600;font-size:1rem}
+.tst .who .rl{font-family:var(--f-mono);font-size:11px;color:var(--text-soft)}
+.tst .tag{position:absolute;top:18px;right:18px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-soft);border:1px solid var(--hairline);padding:3px 8px;border-radius:999px}
+
+/* ============ GALLERY ============ */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+.filters button{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;padding:9px 18px;border-radius:999px;border:1px solid var(--hairline);background:var(--surface);color:var(--text-soft);cursor:pointer;transition:.25s}
+.filters button:hover{border-color:var(--brand-400);color:var(--brand-500)}
+.filters button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.gal{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:200px;grid-auto-flow:dense;gap:14px;margin-top:26px}
+.gal figure{margin:0;position:relative;overflow:hidden;border-radius:var(--radius-sm);cursor:pointer;grid-column:span 2}
+.gal figure.tall{grid-row:span 2}
+.gal figure.wide{grid-column:span 3}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.gal figure:hover img{transform:scale(1.08)}
+.gal figcaption{position:absolute;inset:auto 0 0 0;padding:22px 18px 14px;background:linear-gradient(0deg,rgba(4,12,25,.88),transparent);color:#fff;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;transform:translateY(6px);opacity:0;transition:.3s}
+.gal figure:hover figcaption{transform:none;opacity:1}
+.gal figcaption b{display:block;font-family:var(--f-display);font-size:1rem;letter-spacing:0;text-transform:none;color:var(--cyan)}
+.gal figure.hide{display:none}
+
+/* ============ FAQ ============ */
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,5vw,64px);margin-top:44px;align-items:start}
+.faq-list details{border-bottom:1px solid var(--hairline);padding:6px 0}
+.faq-list summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 4px;font-family:var(--f-display);font-weight:600;font-size:1.12rem;transition:color .2s}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary:hover{color:var(--brand-500)}
+.faq-list summary .pm{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--hairline);display:grid;place-items:center;position:relative;transition:.3s}
+.faq-list summary .pm::before,.faq-list summary .pm::after{content:"";position:absolute;background:var(--brand-500);border-radius:2px;transition:.3s}
+.faq-list summary .pm::before{width:12px;height:2px}
+.faq-list summary .pm::after{width:2px;height:12px}
+.faq-list details[open] summary .pm{background:var(--brand-500);border-color:var(--brand-500)}
+.faq-list details[open] summary .pm::before,.faq-list details[open] summary .pm::after{background:#fff}
+.faq-list details[open] summary .pm::after{height:0}
+.faq-list .ans{padding:0 4px 22px;color:var(--text-soft);font-size:1rem;max-width:60ch;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}}
+.faq-aside{background:var(--ink);color:#fff;border-radius:var(--radius);padding:40px 36px;box-shadow:var(--shadow-lg);position:sticky;top:100px}
+.faq-aside h3{font-size:1.6rem;color:#fff}
+.faq-aside p{color:var(--on-ink-soft);margin-top:14px;font-size:.98rem}
+.faq-aside .contacts{display:grid;gap:16px;margin-top:28px}
+.faq-aside .cline{display:flex;align-items:center;gap:13px;font-size:.98rem}
+.faq-aside .cline svg{width:18px;height:18px;color:var(--cyan);flex:none}
+.faq-aside .cline a{color:#fff}
+.faq-aside .cline a:hover{color:var(--cyan)}
+
+/* ============ CTA / CONTACT ============ */
+.cta{position:relative;overflow:hidden;background:var(--ink)}
+.cta-bg{position:absolute;inset:0;z-index:0}
+.cta-bg img{width:100%;height:100%;object-fit:cover;object-position:center 55%;opacity:.32}
+.cta-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(4,12,25,.92),rgba(0,60,130,.55))}
+.cta .wrap{position:relative;z-index:2}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,5vw,70px);align-items:center}
+.contact-copy h2{color:#fff;font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.02em}
+.contact-copy .sec-lead{color:#c9dbf0}
+.contact-copy .direct{display:grid;gap:14px;margin-top:32px}
+.contact-copy .direct a,.contact-copy .direct div{display:flex;align-items:center;gap:14px;color:#eaf2fc;font-size:1.02rem}
+.contact-copy .direct svg{width:20px;height:20px;color:var(--cyan);flex:none}
+.contact-copy .direct .lbl{font-family:var(--f-mono);font-size:11px;color:var(--on-ink-soft);text-transform:uppercase;letter-spacing:.1em}
+.form-card{background:var(--surface);border-radius:var(--radius);padding:clamp(26px,3vw,40px);box-shadow:var(--shadow-lg);border:1px solid var(--hairline)}
+.form-card h3{font-size:1.5rem}
+.form-card .fsub{color:var(--text-soft);font-size:.95rem;margin-top:6px;margin-bottom:24px}
+.field{margin-bottom:16px}
+.field label{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft);margin-bottom:7px}
+.field input,.field textarea{width:100%;padding:13px 15px;border:1.5px solid var(--hairline);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:1rem;transition:.2s;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--brand-400);outline:none;box-shadow:0 0 0 4px rgba(33,150,243,.14)}
+.field.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-card .btn-primary{width:100%;justify-content:center;margin-top:8px}
+.form-card .fnote{font-size:12px;color:var(--text-soft);margin-top:14px;text-align:center}
+.form-card .fnote a{color:var(--brand-500);font-weight:600}
+.form-ok{display:none;text-align:center;padding:30px 10px}
+.form-ok.show{display:block;animation:fade .4s}
+.form-ok .ck{width:64px;height:64px;border-radius:50%;background:color-mix(in srgb,var(--brand-400) 15%,transparent);color:var(--brand-500);display:grid;place-items:center;margin:0 auto 18px}
+.form-ok .ck svg{width:32px;height:32px}
+.form-ok h3{font-size:1.4rem}
+.form-ok p{color:var(--text-soft);margin-top:10px}
+
+/* ============ FOOTER ============ */
+.footer{background:#040E1D;color:var(--on-ink-soft);padding-block:64px 30px;border-top:1px solid var(--ink-line)}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px}
+.footer .brand img{height:44px}
+.footer-about{margin-top:20px;font-size:.94rem;max-width:34ch;line-height:1.7}
+.footer h5{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin:0 0 18px}
+.footer ul{list-style:none;padding:0;margin:0;display:grid;gap:11px}
+.footer ul a,.footer ul li{font-size:.94rem;transition:color .2s}
+.footer ul a:hover{color:#fff}
+.footer .fcontact{display:grid;gap:12px}
+.footer .fcontact div{display:flex;gap:11px;font-size:.92rem;align-items:flex-start}
+.footer .fcontact svg{width:16px;height:16px;color:var(--brand-200);flex:none;margin-top:3px}
+.socials{display:flex;gap:10px;margin-top:22px}
+.socials a{width:40px;height:40px;border-radius:10px;border:1px solid var(--ink-line);display:grid;place-items:center;color:var(--on-ink-soft);transition:.25s}
+.socials a:hover{background:var(--brand-500);color:#fff;border-color:var(--brand-500);transform:translateY(-3px)}
+.socials svg{width:18px;height:18px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-top:50px;padding-top:24px;border-top:1px solid var(--ink-line);font-size:12.5px;font-family:var(--f-mono);letter-spacing:.03em}
+.footer-bottom a:hover{color:#fff}
+
+/* ============ WHATSAPP FLOAT ============ */
+.wa{position:fixed;right:22px;bottom:22px;z-index:70;width:60px;height:60px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 30px -6px rgba(37,211,102,.6);transition:transform .3s;animation:wain 3.2s ease-in-out infinite}
+.wa:hover{transform:scale(1.08)}
+.wa svg{width:32px;height:32px;fill:#fff}
+@keyframes wain{0%,100%{box-shadow:0 10px 30px -6px rgba(37,211,102,.6)}50%{box-shadow:0 10px 30px -6px rgba(37,211,102,.6),0 0 0 12px rgba(37,211,102,0)}}
+.wa::after{content:"1";position:absolute;top:-4px;right:-4px;width:20px;height:20px;background:#ff3b30;color:#fff;font-family:var(--f-body);font-size:11px;font-weight:700;border-radius:50%;display:grid;place-items:center}
+
+/* ============ REVEAL ============ */
+.js .reveal{opacity:0;transform:translateY(24px)}
+.js .reveal.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}
+.js .stagger.in>*{animation:rise .6s both}
+.js .stagger.in>*:nth-child(2){animation-delay:.08s}
+.js .stagger.in>*:nth-child(3){animation-delay:.16s}
+.js .stagger.in>*:nth-child(4){animation-delay:.24s}
+.js .stagger.in>*:nth-child(5){animation-delay:.32s}
+.js .stagger.in>*:nth-child(6){animation-delay:.4s}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1000px){
+  .nav,.header-cta .btn{display:none}
+  .burger{display:block}
+  .header-cta{gap:0}
+  .nav{position:fixed;inset:var(--header-h) 0 auto;flex-direction:column;align-items:stretch;background:var(--ink);padding:16px var(--gutter) 28px;gap:2px;border-bottom:1px solid var(--ink-line);transform:translateY(-120%);transition:transform .4s cubic-bezier(.2,.8,.2,1);box-shadow:var(--shadow-lg)}
+  .header.open .nav{display:flex;transform:none}
+  .header.open{background:var(--ink)}
+  .nav a{padding:14px 8px;font-size:1.05rem;border-bottom:1px solid var(--ink-line)}
+  .nav a::after{display:none}
+  .nav .btn{display:inline-flex;margin-top:16px;justify-content:center}
+  .about{grid-template-columns:1fr}
+  .about-media{max-width:520px}
+  .cov-grid,.faq-grid,.contact-grid{grid-template-columns:1fr}
+  .svc-grid,.ben-grid,.tst-grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr);gap:34px}
+  .step::after{display:none}
+  .faq-aside{position:static}
+}
+@media (max-width:680px){
+  body{font-size:16px}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .svc-grid,.ben-grid,.tst-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}
+  .gal figure,.gal figure.wide{grid-column:span 1}
+  .gal figure.tall{grid-row:span 1}
+  .field.two{grid-template-columns:1fr}
+  .hero-side{display:none}
+  .about-badge{left:0}
+  .trust-strip .wrap{flex-direction:column;align-items:flex-start;gap:16px}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .js .reveal{opacity:1;transform:none}
+  .hero-bg img{animation:none;transform:scale(1.05)}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="wrap">
+    <a href="#inicio" class="brand" aria-label="SLG - Inicio">
+      <img src="assets/logo-white.svg" alt="Logotipo SLG">
+      <span>
+        <span class="bname">SLG</span>
+        <span class="btag">Soluciones Logísticas Globales</span>
+      </span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Navegación principal">
+      <a href="#inicio">Inicio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#contacto" class="btn btn-primary">Solicitar cotización</a>
+    </nav>
+    <div class="header-cta">
+      <a href="#contacto" class="btn btn-primary">Solicitar cotización</a>
+      <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="hero-bg">
+    <img src="assets/camion-06.jpg" alt="Tracto camión SLG transportando un contenedor por carretera al atardecer">
+  </div>
+  <div class="hero-side" aria-hidden="true"><span>MÉXICO · LOGÍSTICA TERRESTRE</span><span>EST. — TRANSPORTES SLG</span></div>
+  <div class="hero-inner">
+    <div class="wrap">
+      <span class="eyebrow on-dark">Transporte terrestre · Carga contenerizada</span>
+      <h1>Conectamos fronteras. <span class="accent">Movilizamos el éxito</span> de su negocio.</h1>
+      <p class="hero-sub">Transporte y logística de carga contenerizada desde los principales puertos de México hasta su destino final —con puntualidad, seguridad operativa y monitoreo constante en cada kilómetro.</p>
+      <div class="hero-actions">
+        <a href="#contacto" class="btn btn-primary btn-lg">Solicitar cotización
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#servicios" class="btn btn-ghost btn-lg" style="color:#fff">Conocer más</a>
+      </div>
+      <div class="hero-trust"><span class="dot"></span> Puntualidad, seguridad e integridad en cada kilómetro.</div>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true"><span class="line"></span> Desliza</div>
+</section>
+
+<!-- ============ TRUST STRIP + METRICS ============ -->
+<section class="band-dark trust-strip">
+  <div class="wrap">
+    <span class="label">La confianza de empresas que mueven carga hacia y desde los puertos de México</span>
+    <div class="trust-tags">
+      <span>Comercio exterior</span><span>Importación / Exportación</span><span>Manufactura</span><span>Retail &amp; Distribución</span><span>Agroindustria</span>
+    </div>
+  </div>
+</section>
+<section class="band-dark" style="padding-block:clamp(48px,7vw,84px)">
+  <div class="wrap">
+    <div class="metrics stagger">
+      <div class="metric"><div class="num">7<span class="u">+</span></div><div class="cap">Nodos de cobertura nacional</div></div>
+      <div class="metric"><div class="num">40/20</div><div class="cap">Contenedores especializados</div></div>
+      <div class="metric"><div class="num">24/7</div><div class="cap">Monitoreo en ruta</div></div>
+      <div class="metric"><div class="num">98<span class="u">%</span></div><div class="cap">Entregas a tiempo</div></div>
+    </div>
+    <p class="metric-note">*Cifras ilustrativas y personalizables con los indicadores reales de su operación.</p>
+  </div>
+</section>
+
+<!-- ============ NOSOTROS ============ -->
+<section class="pad" id="nosotros">
+  <div class="wrap">
+    <div class="about">
+      <div class="about-media reveal">
+        <img src="assets/camion-03.jpg" alt="Unidad de Transportes SLG con contenedor en centro de operaciones">
+        <span class="frame" aria-hidden="true"></span>
+        <div class="about-badge">
+          <div class="n">100%</div>
+          <div class="t">Enfoque en su carga</div>
+        </div>
+      </div>
+      <div class="about-copy reveal">
+        <span class="eyebrow light">Quiénes somos</span>
+        <h2 class="sec-title">Su aliado estratégico en la cadena de suministro.</h2>
+        <p class="sec-lead">En SLG somos especialistas en la gestión y el transporte terrestre de mercancías. Nos distingue nuestra capacidad de respuesta y una infraestructura logística robusta que garantiza la integridad de su carga, desde los principales puertos del país hasta su destino final.</p>
+        <div class="pillars">
+          <div class="pillar">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 3-3 3-3-3z"/><path d="M12 8v13M5 12l7-2 7 2"/></svg></span>
+            <div><h4>Nuestra misión</h4><p>Facilitar el crecimiento de nuestros clientes mediante soluciones logísticas personalizadas, basadas en la integridad, la puntualidad y la excelencia operativa.</p></div>
+          </div>
+          <div class="pillar">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <div><h4>Nuestro compromiso</h4><p>No solo movemos carga: aseguramos la continuidad de su negocio. Superamos los estándares de la industria en cada kilómetro, adaptándonos a las exigencias del mercado global.</p></div>
+          </div>
+          <div class="pillar">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="12" rx="1.5"/><path d="M3 11h18M8 7V4h8v3"/></svg></span>
+            <div><h4>Flota moderna &amp; equipo certificado</h4><p>Profesionales certificados y unidades modernas enfocadas en la optimización de tiempos y la seguridad operativa, para carga contenerizada y soluciones de última milla.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="pad" id="servicios" style="background:var(--surface-2)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow light">Soluciones · Transporte · Logística</span>
+      <h2 class="sec-title">Soluciones integrales de transporte y logística.</h2>
+      <p class="sec-lead">Cubrimos toda la operación: del patio portuario a la ruta nacional. Cada servicio está diseñado para mover su mercancía de forma segura, eficiente y sin fricciones.</p>
+    </div>
+    <div class="svc-grid stagger">
+      <article class="svc">
+        <span class="idx">01</span>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="6" width="20" height="12" rx="1"/><path d="M6 6v12M10 6v12M14 6v12M18 6v12"/></svg></span>
+        <h3>Traslado de contenedores</h3>
+        <p>Movimiento de contenedores llenos y vacíos, 20' y 40', con chasis portacontenedores especializado y protocolos de aseguramiento de carga.</p>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Integridad garantizada puerta a puerta</div>
+        <a href="#contacto" class="more">Ver detalles <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+      <article class="svc">
+        <span class="idx">02</span>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 12l9-5M12 12v10M12 12L3 7"/></svg></span>
+        <h3>Consolidación &amp; desconsolidación</h3>
+        <p>Optimizamos cada metro cúbico consolidando o separando su mercancía según la ruta, reduciendo viajes y costos operativos.</p>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Menos viajes, mayor eficiencia</div>
+        <a href="#contacto" class="more">Ver detalles <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+      <article class="svc">
+        <span class="idx">03</span>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2v20M5 8a7 7 0 0 0 14 0"/><circle cx="12" cy="5" r="2.5"/></svg></span>
+        <h3>Transporte local y portuario</h3>
+        <p>Conexión directa con los principales puertos: maniobras de acarreo, traspaleos y manejo de carga suelta en plataformas.</p>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Última milla sin fricciones</div>
+        <a href="#contacto" class="more">Ver detalles <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+      <article class="svc">
+        <span class="idx">04</span>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 17h11V6H3zM14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></span>
+        <h3>Transporte foráneo y nacional</h3>
+        <p>Rutas a lo largo del país con equipo especializado —chasis 40/20 y plataformas— y monitoreo constante en tiempo real.</p>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Visibilidad total del trayecto</div>
+        <a href="#contacto" class="more">Ver detalles <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+      <article class="svc">
+        <span class="idx">05</span>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 16h13v-4H2zM15 13h4l3 3v0h-7z"/><circle cx="6" cy="17" r="1.8"/><circle cx="18" cy="17" r="1.8"/><path d="M6 12V8h6v4"/></svg></span>
+        <h3>Carga sobredimensionada y suelta</h3>
+        <p>Plataformas para carga que excede lo estándar, manejada con protocolos de seguridad y permisos correspondientes.</p>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Soluciones para lo complejo</div>
+        <a href="#contacto" class="more">Ver detalles <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+      <article class="svc">
+        <span class="idx">06</span>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.5 8 12 8 12s8-6.5 8-12a8 8 0 0 0-8-8z"/></svg></span>
+        <h3>Logística de última milla</h3>
+        <p>Coordinamos la entrega final para que su carga llegue exactamente donde y cuando debe, cerrando el ciclo de la cadena.</p>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg> Entrega precisa y confiable</div>
+        <a href="#contacto" class="more">Ver detalles <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COBERTURA (NETWORK) ============ -->
+<section class="band-dark pad cov" id="cobertura">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow on-dark">Centros de distribución y conectividad</span>
+      <h2 class="sec-title" style="color:#fff">Presencia estratégica en los principales nodos logísticos.</h2>
+      <p class="sec-lead">Operamos una red conectada a los puertos y centros de consumo más relevantes del país, garantizando rutas eficientes de norte a sur.</p>
+    </div>
+    <div class="cov-grid">
+      <div class="cov-list reveal" id="covList">
+        <div class="node-row" data-node="cdmx"><span class="pin"></span><span class="nm">Ciudad de México</span><span class="st">Hub central</span></div>
+        <div class="node-row" data-node="mty"><span class="pin"></span><span class="nm">Monterrey</span><span class="st">Nuevo León</span></div>
+        <div class="node-row" data-node="man"><span class="pin"></span><span class="nm">Manzanillo</span><span class="st">Colima · Puerto</span></div>
+        <div class="node-row" data-node="ver"><span class="pin"></span><span class="nm">Veracruz</span><span class="st">Veracruz · Puerto</span></div>
+        <div class="node-row" data-node="alt"><span class="pin"></span><span class="nm">Altamira</span><span class="st">Tamaulipas · Puerto</span></div>
+        <div class="node-row" data-node="maz"><span class="pin"></span><span class="nm">Mazatlán</span><span class="st">Sinaloa · Puerto</span></div>
+        <div class="node-row" data-node="ens"><span class="pin"></span><span class="nm">Ensenada</span><span class="st">Baja California · Puerto</span></div>
+      </div>
+      <div class="map-wrap reveal">
+        <svg viewBox="0 0 1000 640" role="img" aria-label="Mapa de red de cobertura nacional de SLG">
+          <defs>
+            <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+              <path d="M50 0H0V50" fill="none" stroke="#1C3B60" stroke-width="1" opacity="0.35"/>
+            </pattern>
+          </defs>
+          <rect width="1000" height="640" fill="url(#grid)"/>
+          <!-- routes from CDMX hub -->
+          <g>
+            <path class="route" d="M520 400 L470 190"/>
+            <path class="route" d="M520 400 L410 410"/>
+            <path class="route" d="M520 400 L650 405"/>
+            <path class="route" d="M520 400 L565 275"/>
+            <path class="route" d="M520 400 L300 265"/>
+            <path class="route" d="M300 265 L100 130"/>
+          </g>
+          <!-- nodes -->
+          <g class="mnode" data-node="ens" transform="translate(100,130)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Ensenada</text></g>
+          <g class="mnode" data-node="maz" transform="translate(300,265)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Mazatlán</text></g>
+          <g class="mnode" data-node="mty" transform="translate(470,190)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Monterrey</text></g>
+          <g class="mnode" data-node="alt" transform="translate(565,275)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Altamira</text></g>
+          <g class="mnode" data-node="man" transform="translate(410,410)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="-90" y="5">Manzanillo</text></g>
+          <g class="mnode" data-node="ver" transform="translate(650,405)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Veracruz</text></g>
+          <g class="mnode active" data-node="cdmx" transform="translate(520,400)"><circle class="halo" r="16" style="opacity:.4"/><circle class="core hub" r="8"/><circle class="hit" r="30"/><text x="16" y="-8" style="fill:#fff;font-weight:600">Ciudad de México</text></g>
+        </svg>
+      </div>
+    </div>
+    <p class="cov-note">Red operativa nacional · Conexión directa puerto–destino · Rutas monitoreadas en tiempo real</p>
+  </div>
+</section>
+
+<!-- ============ BENEFICIOS ============ -->
+<section class="pad" id="beneficios">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow light">Por qué elegir SLG</span>
+      <h2 class="sec-title">Diferenciadores que protegen su operación.</h2>
+      <p class="sec-lead">Elegir a SLG es elegir certeza. Estas son las razones por las que empresas confían en nosotros para mover lo que más importa.</p>
+    </div>
+    <div class="ben-grid stagger">
+      <div class="ben">
+        <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></span><span class="kpi">Un solo interlocutor</span></div>
+        <h4>Atención personalizada</h4>
+        <p>Un equipo dedicado que conoce su operación y responde con agilidad ante cualquier necesidad.</p>
+      </div>
+      <div class="ben">
+        <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></span><span class="kpi">Cero sorpresas</span></div>
+        <h4>Seguridad operativa</h4>
+        <p>Protocolos que garantizan la integridad de su carga desde el origen hasta la entrega final.</p>
+      </div>
+      <div class="ben">
+        <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="12" rx="1.5"/><path d="M8 7V4h8v3"/></svg></span><span class="kpi">Flota moderna</span></div>
+        <h4>Equipo especializado</h4>
+        <p>Unidades y chasis portacontenedores modernos, operados por profesionales certificados.</p>
+      </div>
+      <div class="ben">
+        <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a8 8 0 0 0-8 8c0 5.5 8 12 8 12s8-6.5 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="kpi">7 nodos</span></div>
+        <h4>Cobertura nacional</h4>
+        <p>Presencia estratégica en los principales puertos y centros de distribución del país.</p>
+      </div>
+      <div class="ben">
+        <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="kpi">Tiempo real</span></div>
+        <h4>Monitoreo constante</h4>
+        <p>Tecnología de seguimiento que le da visibilidad total del trayecto de su carga.</p>
+      </div>
+      <div class="ben">
+        <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><span class="kpi">Puntualidad</span></div>
+        <h4>Resultados medibles</h4>
+        <p>Optimización de tiempos y entregas confiables que sostienen la continuidad de su negocio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESO ============ -->
+<section class="band-dark pad" id="proceso">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow on-dark">Cómo trabajamos</span>
+      <h2 class="sec-title" style="color:#fff">Un proceso claro, de la cotización a la entrega.</h2>
+      <p class="sec-lead">Sin complejidad innecesaria. Así movemos su carga con orden, control y trazabilidad en cada etapa.</p>
+    </div>
+    <div class="steps stagger">
+      <div class="step"><span class="dot"></span><h4>Cotización y análisis</h4><p>Nos comparte origen, destino y tipo de carga. Analizamos su necesidad y diseñamos la ruta óptima.</p></div>
+      <div class="step"><span class="dot"></span><h4>Planeación logística</h4><p>Asignamos la unidad, el chasis y las ventanas de tiempo adecuadas para su operación.</p></div>
+      <div class="step"><span class="dot"></span><h4>Ejecución y monitoreo</h4><p>Su carga viaja con seguimiento constante y comunicación proactiva ante cualquier evento.</p></div>
+      <div class="step"><span class="dot"></span><h4>Entrega y seguimiento</h4><p>Confirmamos la entrega íntegra y damos continuidad para su próximo proyecto.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIOS ============ -->
+<section class="pad" id="testimonios" style="background:var(--surface-2)">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow light">Testimonios</span>
+      <h2 class="sec-title">La voz de quienes confían su carga a SLG.</h2>
+      <p class="sec-lead">Testimonios de ejemplo, listos para reemplazar con reseñas reales de sus clientes.</p>
+    </div>
+    <div class="tst-grid stagger">
+      <article class="tst">
+        <span class="tag">Ejemplo</span>
+        <span class="quote">“</span>
+        <div class="stars">★★★★★</div>
+        <p>Trasladan nuestros contenedores desde Manzanillo con una puntualidad impecable. Saber dónde está la carga en todo momento nos cambió la operación.</p>
+        <div class="who"><span class="av">MR</span><div><div class="nm">Mariana Ríos</div><div class="rl">Gerente de Importaciones · Comercio Exterior</div></div></div>
+      </article>
+      <article class="tst">
+        <span class="tag">Ejemplo</span>
+        <span class="quote">“</span>
+        <div class="stars">★★★★★</div>
+        <p>Lo que más valoramos es la atención directa. Un solo contacto que resuelve y responde. La carga siempre llega íntegra y a tiempo.</p>
+        <div class="who"><span class="av">JC</span><div><div class="nm">Jorge Cárdenas</div><div class="rl">Director de Operaciones · Manufactura</div></div></div>
+      </article>
+      <article class="tst">
+        <span class="tag">Ejemplo</span>
+        <span class="quote">“</span>
+        <div class="stars">★★★★★</div>
+        <p>Manejaron una carga sobredimensionada compleja con total profesionalismo. Cumplieron cada permiso y cada tiempo prometido.</p>
+        <div class="who"><span class="av">AL</span><div><div class="nm">Ana Lozano</div><div class="rl">Coordinadora Logística · Proyectos Industriales</div></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERÍA ============ -->
+<section class="pad" id="galeria">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow light">Nuestra operación</span>
+      <h2 class="sec-title">Flota en movimiento.</h2>
+      <p class="sec-lead">Unidades reales de SLG conectando puertos, carreteras y centros de distribución a lo largo del país.</p>
+    </div>
+    <div class="filters reveal" role="group" aria-label="Filtros de galería">
+      <button class="active" data-filter="all">Todo</button>
+      <button data-filter="portuario">Portuario</button>
+      <button data-filter="foraneo">Foráneo</button>
+      <button data-filter="contenedores">Contenedores</button>
+    </div>
+    <div class="gal" id="gal">
+      <figure class="wide tall" data-cat="foraneo"><img src="assets/camion-06.jpg" alt="Camión SLG en carretera al atardecer"><figcaption><b>Ruta nacional</b>Transporte foráneo · atardecer</figcaption></figure>
+      <figure data-cat="contenedores"><img src="assets/camion-02.jpg" alt="Tracto con contenedor sobre carretera húmeda"><figcaption><b>Contenedor 40'</b>En tránsito</figcaption></figure>
+      <figure data-cat="portuario"><img src="assets/camion-03.jpg" alt="Unidad SLG con contenedor TRITON"><figcaption><b>Maniobra portuaria</b>Contenedor lleno</figcaption></figure>
+      <figure class="tall" data-cat="portuario"><img src="assets/camion-05.jpg" alt="Camión SLG con contenedor refrigerado COSCO"><figcaption><b>Carga refrigerada</b>Conexión portuaria</figcaption></figure>
+      <figure data-cat="foraneo"><img src="assets/camion-04.jpg" alt="Camión con contenedor Evergreen en carretera de montaña"><figcaption><b>Ruta de montaña</b>Transporte foráneo</figcaption></figure>
+      <figure data-cat="contenedores"><img src="assets/camion-01.jpg" alt="Tracto camión SLG en patio de operación nocturno"><figcaption><b>Patio de operación</b>Operación nocturna</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="pad" id="faq" style="background:var(--surface-2)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow light">Preguntas frecuentes</span>
+      <h2 class="sec-title">Todo lo que necesita saber antes de mover su carga.</h2>
+    </div>
+    <div class="faq-grid">
+      <aside class="faq-aside reveal">
+        <h3>¿Tiene otra pregunta?</h3>
+        <p>Nuestro equipo le responde de forma directa y le prepara una cotización a la medida de su operación.</p>
+        <div class="contacts">
+          <div class="cline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg><a href="tel:+523121961310">312 196 1310</a></div>
+          <div class="cline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg><a href="mailto:atencionaclientes@transportesslg.com">atencionaclientes@transportesslg.com</a></div>
+        </div>
+      </aside>
+      <div class="faq-list reveal">
+        <details open><summary>¿Qué tipo de carga transportan? <span class="pm"></span></summary><div class="ans">Movemos contenedores de 20' y 40' (llenos y vacíos), carga suelta en plataformas y carga sobredimensionada. También realizamos consolidación, desconsolidación, traspaleos y maniobras portuarias.</div></details>
+        <details><summary>¿En qué zonas tienen cobertura? <span class="pm"></span></summary><div class="ans">Contamos con nodos estratégicos en Ciudad de México, Monterrey, Manzanillo, Veracruz, Altamira, Mazatlán y Ensenada, además de rutas foráneas a lo largo de todo el país.</div></details>
+        <details><summary>¿Cómo solicito una cotización? <span class="pm"></span></summary><div class="ans">Puede completar el formulario de contacto, escribirnos por WhatsApp o llamarnos directamente. Cuéntenos origen, destino y tipo de carga y le preparamos una propuesta a la medida.</div></details>
+        <details><summary>¿Ofrecen monitoreo del envío? <span class="pm"></span></summary><div class="ans">Sí. Todas nuestras rutas cuentan con monitoreo constante, lo que le da visibilidad del trayecto y comunicación proactiva ante cualquier evento.</div></details>
+        <details><summary>¿Trabajan con carga de importación desde puertos? <span class="pm"></span></summary><div class="ans">Así es. Somos especialistas en transporte local y portuario, con conexión directa a los principales puertos del país para mover su carga desde su arribo.</div></details>
+        <details><summary>¿Cuánto tarda la respuesta a mi solicitud? <span class="pm"></span></summary><div class="ans">Normalmente respondemos el mismo día hábil. Nuestro compromiso es la agilidad, porque sabemos que su operación no puede esperar.</div></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA + CONTACTO ============ -->
+<section class="cta pad" id="contacto">
+  <div class="cta-bg"><img src="assets/camion-01.jpg" alt=""></div>
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-copy reveal">
+        <span class="eyebrow on-dark">Listos para mover su próximo proyecto</span>
+        <h2>Solicite su cotización hoy y optimice su logística con los expertos.</h2>
+        <p class="sec-lead">Cuéntenos qué necesita mover. Un especialista de SLG le responderá con una propuesta clara, sin compromisos.</p>
+        <div class="direct">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/></svg><div><div class="lbl">Contacto directo</div>Lic. Addonay Salgado Rubio · Gerente de Administración</div></div>
+          <a href="tel:+523121961310"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg><div><div class="lbl">Teléfono</div>312 196 1310</div></a>
+          <a href="mailto:atencionaclientes@transportesslg.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg><div><div class="lbl">Correo electrónico</div>atencionaclientes@transportesslg.com</div></a>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a8 8 0 0 0-8 8c0 5.5 8 12 8 12s8-6.5 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg><div><div class="lbl">Domicilio</div>José Vasconcelos #598, Col. Nuevo Salagua, C.P. 28860, Manzanillo, Colima.</div></div>
+        </div>
+      </div>
+      <div class="form-card reveal">
+        <form id="quoteForm" novalidate>
+          <h3>Solicitar cotización</h3>
+          <p class="fsub">Complete el formulario y nos pondremos en contacto a la brevedad.</p>
+          <div class="field"><label for="f-name">Nombre completo</label><input id="f-name" name="nombre" type="text" required placeholder="Su nombre"></div>
+          <div class="field two">
+            <div><label for="f-email">Correo electrónico</label><input id="f-email" name="correo" type="email" required placeholder="correo@empresa.com"></div>
+            <div><label for="f-phone">Teléfono</label><input id="f-phone" name="telefono" type="tel" required placeholder="10 dígitos"></div>
+          </div>
+          <div class="field"><label for="f-company">Empresa <span style="text-transform:none;letter-spacing:0">(opcional)</span></label><input id="f-company" name="empresa" type="text" placeholder="Nombre de su empresa"></div>
+          <div class="field"><label for="f-msg">¿Qué necesita mover?</label><textarea id="f-msg" name="mensaje" rows="4" required placeholder="Origen, destino, tipo de carga y fechas estimadas"></textarea></div>
+          <button type="submit" class="btn btn-primary">Enviar solicitud
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="fnote">O escríbanos directo por <a href="#" id="waLink" target="_blank" rel="noopener">WhatsApp</a></p>
+        </form>
+        <div class="form-ok" id="formOk">
+          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h3>¡Solicitud lista!</h3>
+          <p>Se abrió su cliente de correo con los datos. Si prefiere, también puede contactarnos por WhatsApp o teléfono.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <a href="#inicio" class="brand"><img src="assets/logo-white.svg" alt="SLG"><span class="bname" style="font-size:1.4rem;color:#fff;font-family:var(--f-display);font-weight:700">SLG</span></a>
+        <p class="footer-about">Soluciones Logísticas Globales. Especialistas en transporte terrestre y carga contenerizada, conectando fronteras y movilizando el éxito de su negocio.</p>
+        <div class="socials">
+          <a href="https://www.facebook.com/profile.php?id=61559289010111" target="_blank" rel="noopener" aria-label="Facebook de SLG"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2 0-3 1-3 3v2H9v3h2v7h3v-7h2.5l.5-3H14V9z"/></svg></a>
+          <a href="https://www.linkedin.com/in/trucking-slg-4073a9324" target="_blank" rel="noopener" aria-label="LinkedIn de SLG"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a>
+          <a href="https://transportesslg.com/" target="_blank" rel="noopener" aria-label="Sitio web"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h5>Navegación</h5>
+        <ul>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#cobertura">Cobertura</a></li>
+          <li><a href="#beneficios">Beneficios</a></li>
+          <li><a href="#testimonios">Testimonios</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Servicios</h5>
+        <ul>
+          <li><a href="#servicios">Traslado de contenedores</a></li>
+          <li><a href="#servicios">Transporte portuario</a></li>
+          <li><a href="#servicios">Transporte nacional</a></li>
+          <li><a href="#servicios">Carga sobredimensionada</a></li>
+          <li><a href="#servicios">Última milla</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contacto</h5>
+        <div class="fcontact">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg><a href="tel:+523121961310">312 196 1310</a></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg><a href="mailto:atencionaclientes@transportesslg.com">atencionaclientes@transportesslg.com</a></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg><a href="https://transportesslg.com/" target="_blank" rel="noopener">transportesslg.com</a></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a8 8 0 0 0-8 8c0 5.5 8 12 8 12s8-6.5 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg><span>José Vasconcelos #598, Col. Nuevo Salagua, C.P. 28860, Manzanillo, Colima.</span></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Lun–Vie 8:00–18:00 · Sáb 9:00–14:00</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Transportes SLG · Soluciones Logísticas Globales. Todos los derechos reservados.</span>
+      <span><a href="aviso-privacidad.html">Aviso de privacidad</a> · <a href="aviso-privacidad.html#terminos">Términos y condiciones</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/523121961310?text=Hola%20SLG%2C%20quiero%20solicitar%20una%20cotización%20de%20transporte." target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.6.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-1 .9-1 2.3s1 2.7 1.1 2.8c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2z"/></svg>
+</a>
+
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  var header=document.getElementById('header');
+  var onScroll=function(){header.classList.toggle('scrolled',window.scrollY>40);};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // mobile menu
+  var burger=document.getElementById('burger');
+  burger.addEventListener('click',function(){
+    var open=header.classList.toggle('open');
+    burger.setAttribute('aria-expanded',open);
+  });
+  document.querySelectorAll('#nav a').forEach(function(a){
+    a.addEventListener('click',function(){header.classList.remove('open');burger.setAttribute('aria-expanded',false);});
+  });
+
+  // reveal on scroll
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal,.stagger').forEach(function(el){io.observe(el);});
+
+  // coverage node sync
+  var rows=document.querySelectorAll('.node-row');
+  var mnodes=document.querySelectorAll('.mnode');
+  function setActive(id){
+    rows.forEach(function(r){r.classList.toggle('active',r.dataset.node===id);});
+    mnodes.forEach(function(m){m.classList.toggle('active',m.dataset.node===id);});
+  }
+  rows.forEach(function(r){r.addEventListener('mouseenter',function(){setActive(r.dataset.node);});});
+  mnodes.forEach(function(m){m.addEventListener('mouseenter',function(){setActive(m.dataset.node);});});
+
+  // gallery filter
+  var figs=document.querySelectorAll('#gal figure');
+  document.querySelectorAll('.filters button').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.filters button').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      var f=btn.dataset.filter;
+      figs.forEach(function(fig){fig.classList.toggle('hide',!(f==='all'||fig.dataset.cat===f));});
+    });
+  });
+
+  // year
+  document.getElementById('year').textContent=new Date().getFullYear();
+
+  // form -> mailto + whatsapp
+  var form=document.getElementById('quoteForm');
+  var waBase='https://wa.me/523121961310?text=';
+  function buildMsg(){
+    var n=form.nombre.value.trim(),c=form.correo.value.trim(),t=form.telefono.value.trim(),e=form.empresa.value.trim(),m=form.mensaje.value.trim();
+    return 'Solicitud de cotización SLG%0A%0A'+
+      'Nombre: '+encodeURIComponent(n)+'%0A'+
+      'Correo: '+encodeURIComponent(c)+'%0A'+
+      'Teléfono: '+encodeURIComponent(t)+'%0A'+
+      (e?'Empresa: '+encodeURIComponent(e)+'%0A':'')+
+      'Mensaje: '+encodeURIComponent(m);
+  }
+  // keep whatsapp link live-ish
+  form.addEventListener('input',function(){
+    document.getElementById('waLink').href=waBase+buildMsg();
+  });
+  document.getElementById('waLink').href=waBase+'Hola%20SLG%2C%20quiero%20solicitar%20una%20cotización.';
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    if(!form.checkValidity()){form.reportValidity();return;}
+    var subject=encodeURIComponent('Solicitud de cotización · '+form.nombre.value.trim());
+    var body=buildMsg().replace(/%0A/g,'%0D%0A');
+    window.location.href='mailto:atencionaclientes@transportesslg.com?subject='+subject+'&body='+body;
+    form.style.display='none';
+    document.getElementById('formOk').classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
