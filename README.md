@@ -21,4 +21,4 @@ Optimizado para [Vercel](https://vercel.com). Al ser estático, no requiere paso
 
 Transportes SLG — Soluciones Logísticas Globales
 José Vasconcelos #598, Col. Nuevo Salagua, C.P. 28860, Manzanillo, Colima.
-Tel: 312 196 1310 · atencionaclientes@transportesslg.com · https://transportesslg.com
+Tel: 312 196 1310 · administracion@transportesslg.com · https://transportesslg.com
