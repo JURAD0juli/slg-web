@@ -183,14 +183,15 @@ section{scroll-margin-top:calc(var(--header-h) + 8px)}
 .node-row .st{font-family:var(--f-mono);font-size:11px;color:var(--on-ink-soft);letter-spacing:.04em;margin-left:auto;text-transform:uppercase}
 .map-wrap{position:relative;border:1px solid var(--ink-line);border-radius:var(--radius);background:radial-gradient(120% 120% at 70% 20%,rgba(19,116,204,.16),transparent 60%),var(--ink-2);padding:14px}
 .map-wrap svg{width:100%;height:auto;display:block}
-.route{fill:none;stroke:var(--brand-400);stroke-width:1.4;stroke-dasharray:5 7;opacity:.55;animation:dash 3.5s linear infinite}
+.route{fill:none;stroke:var(--brand-400);stroke-width:1.4;stroke-dasharray:5 7;opacity:.5;animation:dash 3.5s linear infinite}
 @keyframes dash{to{stroke-dashoffset:-48}}
+.mx-land{fill:url(#landglow);stroke:var(--brand-400);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round;opacity:.9}
 .mnode{cursor:pointer}
 .mnode circle.hit{fill:transparent}
 .mnode .halo{fill:var(--cyan);opacity:.18;transition:.3s}
 .mnode .core{fill:var(--cyan);stroke:var(--ink);stroke-width:1.5}
 .mnode:hover .halo,.mnode.active .halo{opacity:.4;r:18}
-.mnode text{font-family:var(--f-mono);font-size:12px;fill:var(--on-ink);letter-spacing:.02em}
+.mnode text{font-family:var(--f-mono);font-size:11px;fill:var(--on-ink);letter-spacing:.02em;paint-order:stroke;stroke:var(--ink-2);stroke-width:3.2px;stroke-linejoin:round}
 .mnode .hub{fill:#fff}
 .cov-note{font-family:var(--f-mono);font-size:11px;color:var(--on-ink-soft);margin-top:22px;opacity:.8}
 
@@ -552,43 +553,63 @@ section{scroll-margin-top:calc(var(--header-h) + 8px)}
     <div class="sec-head reveal">
       <span class="eyebrow on-dark">Centros de distribución y conectividad</span>
       <h2 class="sec-title" style="color:#fff">Presencia estratégica en los principales nodos logísticos.</h2>
-      <p class="sec-lead">Operamos una red conectada a los puertos y centros de consumo más relevantes del país, garantizando rutas eficientes de norte a sur.</p>
+      <p class="sec-lead">Desde nuestro hub en el <strong style="color:#fff">Puerto de Manzanillo</strong> conectamos los principales puertos y centros de consumo del país, con rutas eficientes de norte a sur y de costa a costa.</p>
     </div>
     <div class="cov-grid">
       <div class="cov-list reveal" id="covList">
-        <div class="node-row" data-node="cdmx"><span class="pin"></span><span class="nm">Ciudad de México</span><span class="st">Hub central</span></div>
-        <div class="node-row" data-node="mty"><span class="pin"></span><span class="nm">Monterrey</span><span class="st">Nuevo León</span></div>
-        <div class="node-row" data-node="man"><span class="pin"></span><span class="nm">Manzanillo</span><span class="st">Colima · Puerto</span></div>
-        <div class="node-row" data-node="ver"><span class="pin"></span><span class="nm">Veracruz</span><span class="st">Veracruz · Puerto</span></div>
-        <div class="node-row" data-node="alt"><span class="pin"></span><span class="nm">Altamira</span><span class="st">Tamaulipas · Puerto</span></div>
+        <div class="node-row active" data-node="man"><span class="pin"></span><span class="nm">Manzanillo</span><span class="st">Colima · Hub portuario</span></div>
+        <div class="node-row" data-node="laz"><span class="pin"></span><span class="nm">Lázaro Cárdenas</span><span class="st">Michoacán · Puerto</span></div>
         <div class="node-row" data-node="maz"><span class="pin"></span><span class="nm">Mazatlán</span><span class="st">Sinaloa · Puerto</span></div>
         <div class="node-row" data-node="ens"><span class="pin"></span><span class="nm">Ensenada</span><span class="st">Baja California · Puerto</span></div>
+        <div class="node-row" data-node="alt"><span class="pin"></span><span class="nm">Altamira</span><span class="st">Tamaulipas · Puerto</span></div>
+        <div class="node-row" data-node="ver"><span class="pin"></span><span class="nm">Veracruz</span><span class="st">Veracruz · Puerto</span></div>
+        <div class="node-row" data-node="pro"><span class="pin"></span><span class="nm">Puerto Progreso</span><span class="st">Yucatán · Puerto</span></div>
+        <div class="node-row" data-node="mty"><span class="pin"></span><span class="nm">Monterrey</span><span class="st">Nuevo León</span></div>
+        <div class="node-row" data-node="esc"><span class="pin"></span><span class="nm">Escobedo</span><span class="st">Nuevo León</span></div>
+        <div class="node-row" data-node="gdl"><span class="pin"></span><span class="nm">Guadalajara</span><span class="st">Jalisco</span></div>
+        <div class="node-row" data-node="qro"><span class="pin"></span><span class="nm">Querétaro</span><span class="st">Querétaro</span></div>
+        <div class="node-row" data-node="cdmx"><span class="pin"></span><span class="nm">Ciudad de México</span><span class="st">Centro · Consumo</span></div>
       </div>
       <div class="map-wrap reveal">
-        <svg viewBox="0 0 1000 640" role="img" aria-label="Mapa de red de cobertura nacional de SLG">
+        <svg viewBox="0 0 1000 640" role="img" aria-label="Silueta de México con las rutas de SLG desde el hub del Puerto de Manzanillo hacia sus destinos">
           <defs>
-            <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
-              <path d="M50 0H0V50" fill="none" stroke="#1C3B60" stroke-width="1" opacity="0.35"/>
+            <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse">
+              <path d="M52 0H0V52" fill="none" stroke="#1C3B60" stroke-width="1" opacity="0.22"/>
             </pattern>
+            <radialGradient id="landglow" cx="45%" cy="58%" r="62%">
+              <stop offset="0%" stop-color="#1374CC" stop-opacity="0.24"/>
+              <stop offset="100%" stop-color="#0053A7" stop-opacity="0.05"/>
+            </radialGradient>
           </defs>
           <rect width="1000" height="640" fill="url(#grid)"/>
-          <!-- routes from CDMX hub -->
+          <path class="mx-land" d="M55 43 L150 55 L260 52 L360 95 L470 120 L560 150 L620 200 L640 238 L632 300 L624 361 L650 410 L678 462 L700 478 L745 470 L775 448 L815 415 L855 400 L872 397 L915 393 L955 405 L935 450 L905 485 L880 505 L835 540 L795 585 L770 585 L740 565 L706 557 L640 540 L560 520 L497 501 L434 467 L400 430 L371 334 L335 295 L275 235 L215 150 L185 80 L165 76 L150 95 L165 135 L205 220 L250 305 L270 350 L235 330 L165 255 L95 140 Z"/>
+          <!-- rutas desde el hub Manzanillo -->
           <g>
-            <path class="route" d="M520 400 L470 190"/>
-            <path class="route" d="M520 400 L410 410"/>
-            <path class="route" d="M520 400 L650 405"/>
-            <path class="route" d="M520 400 L565 275"/>
-            <path class="route" d="M520 400 L300 265"/>
-            <path class="route" d="M300 265 L100 130"/>
+            <path class="route" d="M440 460 L82 78"/>
+            <path class="route" d="M440 460 L378 330"/>
+            <path class="route" d="M440 460 L535 240"/>
+            <path class="route" d="M440 460 L553 257"/>
+            <path class="route" d="M440 460 L612 360"/>
+            <path class="route" d="M440 460 L665 460"/>
+            <path class="route" d="M440 460 L868 405"/>
+            <path class="route" d="M440 460 L462 416"/>
+            <path class="route" d="M440 460 L551 418"/>
+            <path class="route" d="M440 460 L588 455"/>
+            <path class="route" d="M440 460 L505 495"/>
           </g>
-          <!-- nodes -->
-          <g class="mnode" data-node="ens" transform="translate(100,130)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Ensenada</text></g>
-          <g class="mnode" data-node="maz" transform="translate(300,265)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Mazatlán</text></g>
-          <g class="mnode" data-node="mty" transform="translate(470,190)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Monterrey</text></g>
-          <g class="mnode" data-node="alt" transform="translate(565,275)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Altamira</text></g>
-          <g class="mnode" data-node="man" transform="translate(410,410)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="-90" y="5">Manzanillo</text></g>
-          <g class="mnode" data-node="ver" transform="translate(650,405)"><circle class="halo" r="12"/><circle class="core" r="6"/><circle class="hit" r="26"/><text x="14" y="5">Veracruz</text></g>
-          <g class="mnode active" data-node="cdmx" transform="translate(520,400)"><circle class="halo" r="16" style="opacity:.4"/><circle class="core hub" r="8"/><circle class="hit" r="30"/><text x="16" y="-8" style="fill:#fff;font-weight:600">Ciudad de México</text></g>
+          <!-- nodos -->
+          <g class="mnode" data-node="ens" transform="translate(82,78)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="13" y="4">Ensenada</text></g>
+          <g class="mnode" data-node="maz" transform="translate(378,330)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="13" y="4">Mazatlán</text></g>
+          <g class="mnode" data-node="esc" transform="translate(535,240)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="-13" y="4" text-anchor="end">Escobedo</text></g>
+          <g class="mnode" data-node="mty" transform="translate(553,257)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="14" y="13">Monterrey</text></g>
+          <g class="mnode" data-node="alt" transform="translate(612,360)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="13" y="4">Altamira</text></g>
+          <g class="mnode" data-node="ver" transform="translate(665,460)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="13" y="4">Veracruz</text></g>
+          <g class="mnode" data-node="pro" transform="translate(868,405)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="-13" y="4" text-anchor="end">Pto. Progreso</text></g>
+          <g class="mnode" data-node="gdl" transform="translate(462,416)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="-13" y="4" text-anchor="end">Guadalajara</text></g>
+          <g class="mnode" data-node="qro" transform="translate(551,418)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="13" y="4">Querétaro</text></g>
+          <g class="mnode" data-node="cdmx" transform="translate(588,455)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="14" y="15">Ciudad de México</text></g>
+          <g class="mnode" data-node="laz" transform="translate(505,495)"><circle class="halo" r="11"/><circle class="core" r="5.5"/><circle class="hit" r="24"/><text x="13" y="15">Lázaro Cárdenas</text></g>
+          <g class="mnode active" data-node="man" transform="translate(440,460)"><circle class="halo" r="16" style="opacity:.4"/><circle class="core hub" r="7.5"/><circle class="hit" r="28"/><text x="-14" y="-9" text-anchor="end" style="fill:#fff;font-weight:600">Manzanillo · Hub</text></g>
         </svg>
       </div>
     </div>
