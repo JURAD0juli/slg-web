@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /resenas/{id} {
+      allow read: if true;
+      allow create: if validReview(request.resource.data);
+      allow update, delete: if false;
+    }
+  }
+
+  function validReview(d) {
+    return d.keys().hasOnly(['nombre', 'empresa', 'calificacion', 'comentario', 'fecha'])
+      && d.keys().hasAll(['nombre', 'calificacion', 'comentario', 'fecha'])
+      && d.nombre is string && d.nombre.size() >= 2 && d.nombre.size() <= 60
+      && (!('empresa' in d) || (d.empresa is string && d.empresa.size() <= 80))
+      && d.calificacion is int && d.calificacion >= 1 && d.calificacion <= 5
+      && d.comentario is string && d.comentario.size() >= 10 && d.comentario.size() <= 600
+      && d.fecha == request.time;
+  }
+}
