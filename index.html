@@ -299,6 +299,26 @@ section{scroll-margin-top:calc(var(--header-h) + 8px)}
 .form-ok h3{font-size:1.4rem}
 .form-ok p{color:var(--text-soft);margin-top:10px}
 
+/* ============ COTIZADOR ============ */
+.quoter-card{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:clamp(24px,3.5vw,40px);margin:44px auto 0;max-width:920px}
+.quoter-row{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:end}
+.quoter-field label{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-soft);margin-bottom:9px}
+.select-wrap{position:relative}
+.select-wrap select{appearance:none;-webkit-appearance:none;width:100%;padding:15px 46px 15px 17px;border:1.5px solid var(--hairline);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:1.05rem;font-weight:500;cursor:pointer;transition:.2s}
+.select-wrap select:focus{outline:none;border-color:var(--brand-400);box-shadow:0 0 0 4px rgba(33,150,243,.14)}
+.select-wrap::after{content:"";position:absolute;right:19px;top:44%;width:9px;height:9px;border-right:2px solid var(--brand-500);border-bottom:2px solid var(--brand-500);transform:translateY(-50%) rotate(45deg);pointer-events:none}
+.quoter-arrow{display:grid;place-items:center;width:46px;height:52px;color:var(--brand-400)}
+.quoter-arrow svg{width:26px;height:26px}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:11px;width:100%;margin-top:26px;background:#25D366;color:#fff;font-family:var(--f-display);font-weight:600;font-size:1.12rem;padding:17px 26px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;transition:transform .25s,box-shadow .25s,background .25s;box-shadow:0 12px 28px -10px rgba(37,211,102,.6)}
+.wa-btn:hover{background:#1ebe5b;transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(37,211,102,.7)}
+.wa-btn svg{width:24px;height:24px;fill:currentColor;flex:none}
+.quoter-note{text-align:center;color:var(--text-soft);font-size:.92rem;margin-top:16px}
+.quoter-note b{color:var(--brand-500);font-weight:600}
+@media (max-width:640px){
+  .quoter-row{grid-template-columns:1fr;gap:12px}
+  .quoter-arrow{width:100%;height:auto;transform:rotate(90deg);margin:4px 0}
+}
+
 /* ============ FOOTER ============ */
 .footer{background:#040E1D;color:var(--on-ink-soft);padding-block:64px 30px;border-top:1px solid var(--ink-line)}
 .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px}
@@ -393,6 +413,7 @@ section{scroll-margin-top:calc(var(--header-h) + 8px)}
       <a href="#inicio">Inicio</a>
       <a href="#nosotros">Nosotros</a>
       <a href="#servicios">Servicios</a>
+      <a href="#cotizador">Cotizador</a>
       <a href="#beneficios">Beneficios</a>
       <a href="#testimonios">Testimonios</a>
       <a href="#contacto">Contacto</a>
@@ -712,6 +733,45 @@ c-198 101 -451 227 -562 278 -112 52 -203 99 -203 104 0 6 10 21 22 34 12 13
   </div>
 </section>
 
+<!-- ============ COTIZADOR ============ -->
+<section class="pad" id="cotizador" style="background:var(--surface-2)">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow light">Cotización en 1 minuto</span>
+      <h2 class="sec-title">Cotiza tu ruta al instante.</h2>
+      <p class="sec-lead">Selecciona el origen y el destino de tu carga. Te llevamos directo a WhatsApp con los datos listos para recibir tu cotización.</p>
+    </div>
+    <div class="quoter-card reveal">
+      <div class="quoter-row">
+        <div class="quoter-field">
+          <label for="q-origen">Origen</label>
+          <div class="select-wrap">
+            <select id="q-origen" aria-label="Estado de origen">
+              <option>Aguascalientes</option><option>Baja California</option><option>Baja California Sur</option><option>Campeche</option><option>Chiapas</option><option>Chihuahua</option><option>Ciudad de México</option><option>Coahuila</option><option selected>Colima</option><option>Durango</option><option>Estado de México</option><option>Guanajuato</option><option>Guerrero</option><option>Hidalgo</option><option>Jalisco</option><option>Michoacán</option><option>Morelos</option><option>Nayarit</option><option>Nuevo León</option><option>Oaxaca</option><option>Puebla</option><option>Querétaro</option><option>Quintana Roo</option><option>San Luis Potosí</option><option>Sinaloa</option><option>Sonora</option><option>Tabasco</option><option>Tamaulipas</option><option>Tlaxcala</option><option>Veracruz</option><option>Yucatán</option><option>Zacatecas</option>
+            </select>
+          </div>
+        </div>
+        <div class="quoter-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+        <div class="quoter-field">
+          <label for="q-destino">Destino</label>
+          <div class="select-wrap">
+            <select id="q-destino" aria-label="Estado de destino">
+              <option>Aguascalientes</option><option>Baja California</option><option>Baja California Sur</option><option>Campeche</option><option>Chiapas</option><option>Chihuahua</option><option selected>Ciudad de México</option><option>Coahuila</option><option>Colima</option><option>Durango</option><option>Estado de México</option><option>Guanajuato</option><option>Guerrero</option><option>Hidalgo</option><option>Jalisco</option><option>Michoacán</option><option>Morelos</option><option>Nayarit</option><option>Nuevo León</option><option>Oaxaca</option><option>Puebla</option><option>Querétaro</option><option>Quintana Roo</option><option>San Luis Potosí</option><option>Sinaloa</option><option>Sonora</option><option>Tabasco</option><option>Tamaulipas</option><option>Tlaxcala</option><option>Veracruz</option><option>Yucatán</option><option>Zacatecas</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <a id="q-wa" class="wa-btn" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.6.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-1 .9-1 2.3s1 2.7 1.1 2.8c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2z"/></svg>
+        Pedir cotización por WhatsApp
+      </a>
+      <p class="quoter-note" id="q-note">Ruta seleccionada: <b>Colima → Ciudad de México</b>. Toca el botón y continuamos en WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ BENEFICIOS ============ -->
 <section class="pad" id="beneficios">
   <div class="wrap">
@@ -1002,6 +1062,23 @@ document.documentElement.classList.add('js');
 
   // year
   document.getElementById('year').textContent=new Date().getFullYear();
+
+  // cotizador de ruta -> WhatsApp
+  var qo=document.getElementById('q-origen'), qd=document.getElementById('q-destino'),
+      qwa=document.getElementById('q-wa'), qnote=document.getElementById('q-note');
+  if(qo&&qd&&qwa){
+    var updateQuoter=function(){
+      var o=qo.value, d=qd.value;
+      var msg='¡Hola! Me gustaría cotizar un envío con SLG.\n\n'+
+              'Origen: '+o+'\nDestino: '+d+'\n\n'+
+              '¿Me pueden compartir tarifa, tipo de unidad y tiempo estimado de entrega? ¡Gracias!';
+      qwa.href='https://wa.me/523121961310?text='+encodeURIComponent(msg);
+      qnote.innerHTML='Ruta seleccionada: <b>'+o+' → '+d+'</b>. Toca el botón y continuamos en WhatsApp.';
+    };
+    qo.addEventListener('change',updateQuoter);
+    qd.addEventListener('change',updateQuoter);
+    updateQuoter();
+  }
 
   // form -> mailto + whatsapp
   var form=document.getElementById('quoteForm');
