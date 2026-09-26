@@ -1,7 +1,7 @@
 (function(){
   // Firebase > Configuración del proyecto > Tus apps > Web: copia apiKey y projectId.
-  var FIREBASE_API_KEY = '';
-  var FIREBASE_PROJECT_ID = '';
+  var FIREBASE_API_KEY = 'AIzaSyC-trThr_RXNY6FH8Ofa8YUD2k88dCe2qI';
+  var FIREBASE_PROJECT_ID = 'slg-web-1798e';
   var COLLECTION = 'resenas';
   var PAGE = 6;
   var COOLDOWN_MS = 10 * 60 * 1000;
