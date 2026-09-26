@@ -39,6 +39,54 @@
   var GREETING = '¡Hola! Soy el **Asistente SLG**. Puedo ayudarte con información sobre nuestros servicios, cobertura y cómo cotizar tu envío. ¿En qué te ayudo?';
   var SUGGESTIONS = ['¿Qué servicios ofrecen?', '¿Dónde tienen cobertura?', 'Quiero cotizar un envío', '¿Cuál es su horario?'];
 
+  var WA_LINK = '[WhatsApp](https://wa.me/523121961310)';
+  var TEL_LINK = '[312 196 1310](tel:+523121961310)';
+  var INTENTS = [
+    { keys: ['hola', 'buenas', 'buenos dias', 'buen dia', 'que tal', 'saludos', 'hey'],
+      reply: '¡Hola! Con gusto te ayudo. Puedo darte información sobre nuestros **servicios**, **cobertura**, **horario** o ayudarte a **cotizar** tu envío. ¿Qué necesitas?', sugs: true },
+    { keys: ['servicio', 'ofrecen', 'que hacen', 'a que se dedican', 'manejan', 'que mueven', 'que transportan', 'tipo de carga'],
+      reply: 'En SLG ofrecemos:\n- **Traslado de contenedores** de 20\' y 40\', llenos y vacíos\n- **Consolidación y desconsolidación** de mercancía\n- **Transporte local y portuario**: acarreos, traspaleos y maniobras\n- **Transporte foráneo y nacional** con chasis 40/20 y plataformas\n- **Carga sobredimensionada** y carga suelta\n- **Logística de última milla**\n¿Te gustaría cotizar alguno?' },
+    { keys: ['cobertura', 'ciudades', 'ciudad', 'llegan', 'rutas', 'ruta', 'zonas', 'estados', 'destinos', 'a donde', 'que lugares', 'monterrey', 'guadalajara', 'veracruz', 'queretaro', 'cdmx', 'mexico', 'lazaro', 'altamira', 'mazatlan', 'ensenada', 'progreso', 'escobedo'],
+      reply: 'Nuestro hub está en el **Puerto de Manzanillo**, y tenemos cobertura en **Lázaro Cárdenas, Mazatlán, Ensenada, Altamira, Veracruz, Puerto Progreso, Monterrey, Escobedo, Guadalajara, Querétaro y Ciudad de México**, además de rutas foráneas a todo el país. ¿Cuál es tu ruta?' },
+    { keys: ['cotiza', 'cotizacion', 'precio', 'tarifa', 'costo', 'cuanto cuesta', 'cuanto cobran', 'cuanto sale', 'presupuesto', 'flete'],
+      reply: 'Con gusto te cotizamos. Compártenos:\n- **Origen** y **destino**\n- **Tipo de carga** (contenedor 20\'/40\', carga suelta o sobredimensionada)\n- **Fecha estimada**\nEnvíanos esos datos por ' + WA_LINK + ' o usa el **cotizador** de esta página y un asesor te responde con tarifa y tiempos.' },
+    { keys: ['horario', 'hora', 'abren', 'cierran', 'atienden', 'fin de semana', 'domingo', 'sabado', 'festivo', '24/7', 'disponibles'],
+      reply: 'Operamos **24/7, los 365 días del año**. Puedes contactarnos a cualquier hora por ' + WA_LINK + ' o al ' + TEL_LINK + '.' },
+    { keys: ['direccion', 'domicilio', 'ubicacion', 'ubicados', 'oficina', 'donde estan', 'donde se encuentran'],
+      reply: 'Nuestras oficinas están en **Av. Manzanillo 117, Col. Guadalupe Victoria, C.P. 28869, Manzanillo, Colima**.' },
+    { keys: ['telefono', 'correo', 'email', 'mail', 'contacto', 'contactar', 'llamar', 'numero', 'whatsapp', 'asesor', 'persona', 'humano'],
+      reply: 'Puedes contactarnos por:\n- **Teléfono / WhatsApp:** ' + TEL_LINK + '\n- **Correo:** administracion@transportesslg.com\n- ' + WA_LINK + ' para atención inmediata\nTu contacto directo es el Lic. Addonay Salgado Rubio, Gerente de Administración.' },
+    { keys: ['contenedor', '20', '40', 'chasis', 'sobredimension', 'carga suelta', 'plataforma', 'vacio', 'lleno'],
+      reply: 'Movemos **contenedores de 20\' y 40\'** (llenos y vacíos) con chasis portacontenedores, **carga suelta en plataformas** y **carga sobredimensionada** con los permisos correspondientes. ¿Qué tipo de carga necesitas mover?' },
+    { keys: ['monitoreo', 'rastreo', 'rastrear', 'seguimiento', 'gps', 'ubicar mi carga', 'donde va', 'seguridad', 'seguro'],
+      reply: 'Todas nuestras rutas cuentan con **monitoreo constante en tiempo real** y protocolos de **seguridad operativa**, con comunicación proactiva ante cualquier evento. Para dar seguimiento a un envío en curso, escríbenos por ' + WA_LINK + '.' },
+    { keys: ['importacion', 'exportacion', 'importar', 'exportar', 'puerto', 'aduana', 'naviera', 'comercio exterior', 'manzanillo'],
+      reply: 'Somos especialistas en **transporte portuario**: movemos tu carga desde su arribo en los principales puertos del país (hub en **Manzanillo**) hasta su destino final, para importación y exportación.' },
+    { keys: ['tarda', 'tiempo', 'dias', 'cuando llega', 'demora', 'entrega', 'respuesta'],
+      reply: 'Los **tiempos de entrega** dependen de la ruta y el tipo de carga, por eso los confirmamos en tu cotización. Normalmente respondemos las solicitudes **el mismo día**. Compártenos tu ruta por ' + WA_LINK + '.' },
+    { keys: ['gracias', 'muchas gracias', 'excelente', 'perfecto', 'ok', 'vale'],
+      reply: '¡Con gusto! Si necesitas algo más, aquí estoy. También puedes escribirnos por ' + WA_LINK + ' cuando quieras.' }
+  ];
+  var FALLBACK = 'No tengo esa información a la mano, pero un asesor puede ayudarte de inmediato por ' + WA_LINK + ' o al ' + TEL_LINK + ' (24/7). También puedo contarte sobre nuestros servicios, cobertura u horario.';
+
+  function normalize(s){
+    return ' ' + s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[¿?¡!.,;:()]/g, ' ').replace(/\s+/g, ' ') + ' ';
+  }
+
+  function localAnswer(text){
+    var t = normalize(text);
+    var best = null, bestScore = 0;
+    INTENTS.forEach(function(intent){
+      var score = 0;
+      intent.keys.forEach(function(k){
+        var nk = normalize(k).trim();
+        if(t.indexOf(' ' + nk + (/^\d+$/.test(nk) ? ' ' : '')) !== -1) score += nk.length > 5 ? 2 : 1;
+      });
+      if(score > bestScore){ bestScore = score; best = intent; }
+    });
+    return best ? { text: best.reply, sugs: !!best.sugs } : { text: FALLBACK, sugs: true };
+  }
+
   var root = document.getElementById('slg-chat');
   if(!root) return;
   var launcher = document.getElementById('chat-launcher');
@@ -65,7 +113,10 @@
     var html = escapeHtml(text.trim());
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/^\s*[-*]\s+/gm, '• ');
-    html = html.replace(/(https:\/\/[^\s<]+[^\s<.,;:!?)])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+    html = html.replace(/\[([^\]]+)\]\(((?:https:\/\/|tel:)[^\s)]+)\)|(https:\/\/[^\s<]+[^\s<.,;:!?)])/g, function(m, label, href, bare){
+      var url = href || bare;
+      return '<a href="' + url + '"' + (url.indexOf('tel:') === 0 ? '' : ' target="_blank" rel="noopener"') + '>' + (label || bare) + '</a>';
+    });
     return html.replace(/\n/g, '<br>');
   }
 
@@ -145,24 +196,20 @@
     input.value = '';
     history.push({ role: 'user', parts: [{ text: text }] });
 
-    if(!GEMINI_API_KEY){
-      history.pop();
-      addMsg('bot', 'El asistente con IA estará disponible muy pronto. Mientras tanto, un asesor te atiende **24/7** por WhatsApp o al **312 196 1310**.');
-      return;
-    }
-
     busy = true;
     sendBtn.disabled = true;
     var typing = addTyping();
-    askGemini().then(function(reply){
-      history.push({ role: 'model', parts: [{ text: reply }] });
-      typing.remove();
-      addMsg('bot', reply);
-    }).catch(function(err){
-      history.pop();
-      typing.remove();
+    var answer = GEMINI_API_KEY
+      ? askGemini().then(function(reply){ return { text: reply }; })
+      : new Promise(function(r){ setTimeout(function(){ r(localAnswer(text)); }, 550); });
+    answer.catch(function(err){
       if(window.console) console.warn('[Asistente SLG]', err);
-      addMsg('bot', 'Lo siento, no pude responder en este momento. Puedes escribirnos por WhatsApp o llamar al **312 196 1310** y un asesor te atiende de inmediato.');
+      return localAnswer(text);
+    }).then(function(res){
+      history.push({ role: 'model', parts: [{ text: res.text }] });
+      typing.remove();
+      addMsg('bot', res.text);
+      if(res.sugs) renderSuggestions();
     }).then(function(){
       busy = false;
       sendBtn.disabled = false;
